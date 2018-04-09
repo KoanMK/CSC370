@@ -33,9 +33,7 @@ if len(sys.argv) < 3:
 	print('Usage: %s <course code> <term>'%sys.argv[0], file=sys.stderr)
 	sys.exit(0)
 	
-course_code, term = sys.argv[0:3]
-print(course_code)
-print(term)
+course_code, term = sys.argv[1:3]
 
 conn = psycopg2.connect(dbname=psql_db,user=psql_user,password=psql_password,host=psql_server,port=psql_port)
 cursor = conn.cursor()
@@ -57,7 +55,7 @@ for row in table:
 		args.append(item)
 		print(args[0])
 		print(args[1])
-#print_header(course_code, args[0], term, args[1])
+print_header(course_code, args[0], term, args[1])
 
 #Print records for a few students
 # print_row('V00123456', 'Rebecca Raspberry', 81)
