@@ -1,5 +1,5 @@
 CSC 225,Computer Science 225,201709,Venkatesh Srinasvani,200
-CSC 226,Computer Science 226,201709,Venkatesh Srinasvani,200,CSC 226
+CSC 226,Computer Science 226,201709,Venkatesh Srinasvani,200,CSC 225
 CSC 230,Computer Science 230,201709,Jiju,200
 CSC 330,Computer Science 330,201801,Mantis Chang,100
 CSC 360,Computer Science 360,201805,Dizastre,200,CSC 226,CSC 230
