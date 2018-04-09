@@ -20,7 +20,7 @@ cursor = conn.cursor()
 
 cursor.execute("select term_code, code, name, instructor_name, capacity from course_offerings order by term_code;")
 table = cursor.fetchall()
-for row in table
+for row in table:
 	print(row)
 
 def print_row(term, course_code, course_name, instructor_name, total_enrollment, maximum_capacity):
