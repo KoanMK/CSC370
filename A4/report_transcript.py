@@ -46,9 +46,10 @@ cursor.execute("select term_code, code, name, grade from enrollment natural join
 table = cursor.fetchall()
 args = []
 for row in table:
+	args = []
 	for item in row:
 		args.append(item)
-print_row(*args)
+	print_row(*args)
 
 cursor.close()
 conn.close()
