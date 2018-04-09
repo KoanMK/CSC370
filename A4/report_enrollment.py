@@ -30,9 +30,13 @@ cursor = conn.cursor()
 cursor.execute("with T1 as (select count(*) as num, code, term_code from enrollment group by code, term_code order by term_code) select course_offerings.term_code, course_offerings.code, name, instructor_name, num, capacity from course_offerings left join T1 on course_offerings.term_code = T1.term_code and course_offerings.code = T1.code order by term_code;")
 table = cursor.fetchall()
 for row in table:
-	if *row == None:
-		*row = 0
-	print_row(*row)
+	argslist = []
+	for item in row:
+		if item == None:
+			argslist.append(0)
+		else:
+			argslist.append(item)
+	print_row(*argslist)
 
 cursor.close()
 conn.close()
