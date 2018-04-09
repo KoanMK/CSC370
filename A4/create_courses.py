@@ -37,7 +37,7 @@ with open(input_filename) as f:
 		#Do something with the data here
 		#Make sure to catch any exceptions that occur and roll back the transaction if a database error occurs.
 
-		print('The code is: "%s"'%(code));
+		print('The code is: {0}'.format(code));
 
 		try:
 			# cursor.execute("insert into people values( %s, %s );", (first_name, last_name) )
