@@ -38,10 +38,8 @@ with open(input_filename) as f:
 		#Make sure to catch any exceptions that occur and roll back the transaction if a database error occurs.
 		
 		try:
-			for prereq in prerequisites:
-				cursor.execute("insert into students (student_id, name) values( %s, %s );", [student_id, student_name] )
-				# cursor.execute("insert into course_offerings (code, term_code) values( %s, %s );", [code, term] )
-				conn.commit() #Only commit if no error occurs (commit will actually be prevented if an error occurs anyway)
+			cursor.execute("insert into students (student_id, name) values( %s, %s );", [student_id, student_name] )
+			conn.commit() #Only commit if no error occurs (commit will actually be prevented if an error occurs anyway)
 		except psycopg2.ProgrammingError as err: 
 			#ProgrammingError is thrown when the database error is related to the format of the query (e.g. syntax error)
 			print("Caught a ProgrammingError:",file=sys.stderr)
