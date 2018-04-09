@@ -41,7 +41,7 @@ with open(input_filename) as f:
 
 		try:
 			# cursor.execute("insert into people values( %s, %s );", (first_name, last_name) )
-			cursor.execute("insert into courses values( %s );", (code) )
+			cursor.execute("insert into courses values( {0} );", (code) )
 			conn.commit() #Only commit if no error occurs (commit will actually be prevented if an error occurs anyway)
 		except psycopg2.ProgrammingError as err: 
 			#ProgrammingError is thrown when the database error is related to the format of the query (e.g. syntax error)
