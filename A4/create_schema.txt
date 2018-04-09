@@ -1,3 +1,6 @@
+-- Nigel Decontie
+-- V00853112
+
 drop table if exists students cascade;
 CREATE TABLE public.students (
 	student_id varchar(9) Not null check (length(student_id)=9),

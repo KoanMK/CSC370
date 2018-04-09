@@ -1,6 +1,9 @@
 # add_drop.py
 # CSC 370 - Spring 2018 - Starter code for Assignment 4
 #
+# Nigel Decontie
+# V00853112
+#
 #
 # B. Bird - 02/26/2018
 
