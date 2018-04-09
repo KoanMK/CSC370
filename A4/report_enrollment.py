@@ -16,22 +16,21 @@ psql_server = 'studdb2.csc.uvic.ca'
 psql_port = 5432
 
 def print_row(term, course_code, course_name, instructor_name, total_enrollment, maximum_capacity):
-	print("%6s %10s %-35s %-25s %s/%s"%(str(term), str(course_code), str(course_name), str(instructor_name), str(maximum_capacity), str(total_enrollment) ) )
+	print("%6s %10s %-35s %-25s %s/%s"%(str(term), str(course_code), str(course_name), str(instructor_name), str(total_enrollment), str(maximum_capacity) ) )
 
 # Mockup: Print some data for a few made up classes
 
-print_row(201709, 'CSC 106', 'The Practice of Computer Science', 'Bill Bird', 203, 215)
+# print_row(201709, 'CSC 106', 'The Practice of Computer Science', 'Bill Bird', 203, 215)
 # print_row(201709, 'CSC 110', 'Fundamentals of Programming: I', 'Jens Weber', 166, 200)
 # print_row(201801, 'CSC 370', 'Database Systems', 'Bill Bird', 146, 150)
 
 conn = psycopg2.connect(dbname=psql_db,user=psql_user,password=psql_password,host=psql_server,port=psql_port)
 cursor = conn.cursor()
 
-cursor.execute("select term_code, code, name, instructor_name, capacity from course_offerings order by term_code;")
-cursor.execute("select count(*) as num, code, term_code from enrollment group by code, term_code order by term_code;")
+cursor.execute("with T1 as (select count(*) as num, code, term_code from enrollment group by code, term_code order by term_code) select course_offerings.term_code, course_offerings.code, name, instructor_name, num, capacity from course_offerings left join T1 on course_offerings.term_code = T1.term_code and course_offerings.code = T1.code order by term_code;")
 table = cursor.fetchall()
 for row in table:
-	print(row)
+	print_row(*row)
 
 cursor.close()
 conn.close()
