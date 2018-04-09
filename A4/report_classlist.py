@@ -50,7 +50,10 @@ table = cursor.fetchall()
 args = []
 for row in table:
 	for item in row:
+		print(item)
 		args.append(item)
+		print(args[0])
+		print(args[1])
 print_header(course_code, args[0], term, args[1])
 
 #Print records for a few students
