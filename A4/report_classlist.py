@@ -33,7 +33,7 @@ if len(sys.argv) < 3:
 	print('Usage: %s <course code> <term>'%sys.argv[0], file=sys.stderr)
 	sys.exit(0)
 	
-course_code, term = sys.argv[1:3]
+course_code, term = sys.argv[2:3]
 print(course_code)
 print(term)
 
