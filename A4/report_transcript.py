@@ -33,11 +33,7 @@ student_id = sys.argv[1]
 conn = psycopg2.connect(dbname=psql_db,user=psql_user,password=psql_password,host=psql_server,port=psql_port)
 cursor = conn.cursor()
 
-# Mockup: Print a transcript for V00123456 (Rebecca Raspberry)
-# student_id = 'V00123456'
-# student_name = 'Rebecca Raspberry'
-# print_header(student_id, student_name)
-
+# Header
 cursor.execute("select name from students where student_id = %s;", [student_id])
 table = cursor.fetchall()
 for row in table:
@@ -45,10 +41,14 @@ for row in table:
 		student_name = item
 print_header(student_id, student_name)
 
-
-# print_row(201709,'CSC 110','Fundamentals of Programming: I', 90)
-# print_row(201709,'CSC 187','Recursive Algorithm Design', None) #The special value None is used to indicate that no grade is assigned.
-# print_row(201801,'CSC 115','Fundamentals of Programming: II', 75)
+# Grades
+cursor.execute("select term_code, code, name, grade from enrollment natural join course_offerings where student_id = %s order by term_code;", [student_id])
+table = cursor.fetchall()
+args = []
+for row in table:
+	for item in row:
+		args.append(item)
+print_row(*args)
 
 cursor.close()
 conn.close()
