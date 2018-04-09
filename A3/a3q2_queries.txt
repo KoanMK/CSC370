@@ -1,0 +1,50 @@
+-- CSC 370 - Spring 2018
+-- Assignment 3: Queries for Question 2 (ferries)
+-- Name: Nigel Decontie
+-- Student ID: V00853112
+
+-- Place your query for each sub-question in the appropriate position
+-- below. Do not modify or remove the '-- Question 2x --' header before
+-- each question.
+
+
+-- Question 2a --
+
+with
+	first as (select vessel_name as vessel1, route_number, scheduled_departure from sailings order by vessel_name asc),
+	second as (select vessel_name as vessel2, route_number, scheduled_departure from sailings order by vessel_name desc)
+select vessel1, vessel2, count(*) as num_pairings
+from first 
+	inner join second
+	on first.route_number = second.route_number
+where vessel1 < vessel2 and first.scheduled_departure = second.scheduled_departure 
+group by vessel1, vessel2
+order by num_pairings desc;
+
+-- Question 2b --
+
+-- Question 2c --
+
+with
+	T1 as (select date_part('month', scheduled_departure)::integer as month, to_char(scheduled_departure, 'YYYY-MM-DD') as day
+			from sailings
+			where route_number = 1
+			except
+			select month, day
+			from routes
+				natural join (select route_number, date_part('month', actual_departure)::integer as month, to_char(actual_departure, 'YYYY-MM-DD') as day, 
+							(extract(epoch from (arrival - actual_departure))/60)::integer as diff from sailings) as sailing_times
+			where diff - nominal_duration > 4 and route_number = 1
+			order by month)
+select month, count(day)
+from T1
+group by month;
+
+-- Question 2d --
+
+-- Question 2e --
+
+-- Question 2f --
+
+-- Question 2g --
+

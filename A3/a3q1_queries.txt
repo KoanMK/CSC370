@@ -1,0 +1,26 @@
+-- CSC 370 - Spring 2018
+-- Assignment 3: Queries for Question 1 (imdb)
+-- Name: Nigel Decontie
+-- Student ID: V00853112
+
+-- Place your query for each sub-question in the appropriate position
+-- below. Do not modify or remove the '-- Question 1x --' header before
+-- each question.
+
+
+-- Question 1a --
+
+with
+	primary_names as (select title_id, name as primary_name
+						from title_names where is_primary = true),
+	movies as (select year, max(rating) as rating from ratings natural join titles 
+			where votes > 9999 group by year)
+select primary_name, year, movies.rating, votes
+from movies
+	natural join titles
+	natural join ratings
+	natural join primary_names
+where year > 1999 and year < 2018 and title_type = 'movie'
+order by year;
+
+-- Question 1b --

@@ -1,0 +1,7 @@
+CSC 225,Computer Science 225,201709,Venkatesh Srinasvani,200
+CSC 226,Computer Science 226,201709,Venkatesh Srinasvani,200,CSC 226
+CSC 230,Computer Science 230,201709,Jiju,200
+CSC 330,Computer Science 330,201801,Mantis Chang,100
+CSC 360,Computer Science 360,201805,Dizastre,200,CSC 226,CSC 230
+CSC 370,Computer Science 370,201805,Bill Bird,150,CSC 226
+AHVS 311E,History of Video Games,201805,Dr. Dubs,75

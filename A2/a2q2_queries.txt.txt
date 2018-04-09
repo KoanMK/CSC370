@@ -1,0 +1,70 @@
+-- CSC 370 - Spring 2018
+-- Assignment 2: Queries for Question 2 (ferries)
+-- Name: Nigel Decontie
+-- Student ID: V00853112
+
+-- Place your query for each sub-question in the appropriate position
+-- below. Do not modify or remove the '-- Question 2x --' header before
+-- each question.
+
+
+-- Question 2a --
+
+select distinct
+	vessel_name
+from sailings
+where route_number = 1
+order by vessel_name;
+	
+-- Question 2b --
+
+select distinct
+	vessel_name, count(vessel_name)
+from sailings
+group by vessel_name
+having count(vessel_name) > 0
+order by vessel_name;
+
+
+-- Question 2c --
+
+with
+	vessel_routes as (select distinct route_number, vessel_name from sailings),
+	total as (select count(route_number) as num_routes, vessel_name from vessel_routes group by vessel_name)	
+select
+	vessel_name, num_routes
+from total
+group by vessel_name, num_routes
+having num_routes > 1
+order by vessel_name;
+	
+-- Question 2d --
+
+with
+	ships as (select distinct
+				route_number, vessel_name, year_built
+				from sailings
+				natural join fleet
+				order by route_number)
+select f.route_number, f.vessel_name, f.year_built
+from (
+	select route_number, min(year_built) as min_year
+	from ships group by route_number
+) as x inner join ships as f on f.route_number = x.route_number and f.year_built = x.min_year
+order by f.route_number;
+
+-- Question 2e --
+
+with
+	ports as (select distinct
+				source_port, destination_port
+				from sailings
+				where vessel_name = 'Queen of New Westminster')
+select distinct
+	vessel_name
+from sailings
+natural join ports
+where sailings.source_port = ports.source_port 
+	or sailings.destination_port = ports.destination_port
+	or sailings.source_port = ports.destination_port
+	or sailings.destination_port = ports.source_port;

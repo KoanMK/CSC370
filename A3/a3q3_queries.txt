@@ -1,0 +1,52 @@
+-- CSC 370 - Spring 2018
+-- Assignment 3: Queries for Question 3 (vwsn_1year)
+-- Name: Nigel Decontie
+-- Student ID: V00853112
+
+-- Place your query for each sub-question in the appropriate position
+-- below. Do not modify or remove the '-- Question 3x --' header before
+-- each question.
+
+
+-- Question 3a --
+
+select station_id, name, temperature, observation_time
+from observations
+	inner join stations
+	on observations.station_id = stations.id
+where temperature = (select max(temperature) as max_temp from observations);
+
+
+-- Question 3b --
+
+with
+	T1 as (select station_id, max(temperature) as max_temp from observations group by station_id)
+select station_id, name, temperature as max_temperature, observation_time
+from observations
+	natural join T1
+	inner join stations
+	on observations.station_id = stations.id
+where temperature = T1.max_temp and station_id < 11;
+
+-- Question 3c --
+
+with 
+	T1 as (select distinct station_id from observations
+		where observation_time is not null)
+select station_id, name
+from observations
+	natural join T1
+	inner join stations
+	on observations.station_id = stations.id
+except
+select station_id, name
+from observations
+	inner join stations
+	on observations.station_id = stations.id
+where to_char(observation_time, 'YYYY-MM') = '2017-06'
+order by station_id;
+
+-- Question 3d --
+
+-- Question 3e --
+

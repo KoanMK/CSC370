@@ -1,0 +1,65 @@
+drop table if exists students cascade;
+CREATE TABLE public.students (
+	student_id varchar(9) Not null check (length(student_id)=9),
+	"name" varchar(255) NULL,
+	PRIMARY KEY (student_id)
+);
+
+drop table if exists instructors cascade;
+CREATE TABLE public.instructors (
+	"name" varchar(255) null,
+	primary key (name)
+);
+
+drop table if exists term cascade;
+CREATE TABLE public.term (
+	term_code varchar(6) null,
+	primary key (term_code)
+);
+
+drop table if exists courses cascade;
+CREATE TABLE public.courses (
+	"code" varchar(30) null check (length(code)>0),
+	primary key (code)
+);
+
+drop table if exists course_offerings cascade;
+CREATE TABLE public.course_offerings (
+	code varchar(30) null,
+	term_code varchar(6) null check (length(term_code)>0),
+	capacity int NULL,
+	instructor_name varchar(255) NULL,
+	"name" varchar(36) unique check (length(name) > 0),
+	primary key (code, term_code),
+	CONSTRAINT course_offerings_courses_fk FOREIGN KEY (code) REFERENCES public.courses(code) ON DELETE RESTRICT ON UPDATE RESTRICT,
+	CONSTRAINT course_offerings_term_fk FOREIGN KEY (term_code) REFERENCES public.term(term_code) ON DELETE RESTRICT ON UPDATE RESTRICT,
+	CONSTRAINT course_offerings_instructors_fk FOREIGN KEY (instructor_name) REFERENCES public.instructors("name") ON DELETE RESTRICT ON UPDATE RESTRICT
+);
+
+drop table if exists enrollment cascade;
+CREATE TABLE public.enrollment (
+	student_id varchar(9) NULL,
+	code varchar(30) NULL,
+	term_code varchar(6) null check (length(term_code) = 6),
+	grade int null,
+	primary key (student_id, code, term_code),
+	CONSTRAINT enrollment_students_fk FOREIGN KEY (student_id) REFERENCES public.students(student_id) ON DELETE RESTRICT ON UPDATE restrict,
+	CONSTRAINT enrollment_ids_fk FOREIGN KEY (code, term_code) REFERENCES public.course_offerings(code, term_code) ON DELETE RESTRICT ON UPDATE restrict
+);
+
+drop table if exists prerequisites cascade;
+CREATE TABLE public.prerequisites (
+	prereq_id int NULL,
+	prerequisite varchar(30) NULL,
+	course_code varchar(30) NULL,
+	term_code varchar(6) NULL,
+	primary key (prereq_id),
+	CONSTRAINT prerequisites_courses_fk FOREIGN KEY (prerequisite) REFERENCES public.courses(code) ON DELETE RESTRICT ON UPDATE RESTRICT,
+	CONSTRAINT prerequisites_course_offerings_fk FOREIGN KEY (course_code,term_code) REFERENCES public.course_offerings(code,term_code) ON DELETE RESTRICT ON UPDATE RESTRICT
+);
+
+
+
+
+
+
