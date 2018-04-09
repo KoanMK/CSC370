@@ -5,6 +5,13 @@
 
 import sys, csv, psycopg2
 
+if len(sys.argv) < 2:
+	print("Usage: %s <input file>",file=sys.stderr)
+	sys.exit(0)
+	
+input_filename = sys.argv[1]
+
+# Open your DB connection here
 psql_user = 'nigeld' #Change this to your username
 psql_db = 'nigeld' #Change this to your personal DB name
 psql_password = 'admin' #Put your password (as a string) here
@@ -14,14 +21,6 @@ psql_port = 5432
 conn = psycopg2.connect(dbname=psql_db,user=psql_user,password=psql_password,host=psql_server,port=psql_port)
 
 cursor = conn.cursor()
-
-if len(sys.argv) < 2:
-	print("Usage: %s <input file>",file=sys.stderr)
-	sys.exit(0)
-	
-input_filename = sys.argv[1]
-
-# Open your DB connection here
 
 with open(input_filename) as f:
 	for row in csv.reader(f):
