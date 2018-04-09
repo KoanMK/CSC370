@@ -49,18 +49,19 @@ cursor.execute("select name, instructor_name from course_offerings where code = 
 table = cursor.fetchall()
 args = []
 for row in table:
-	print(row)
 	for item in row:
-		print("Item: ", item)
 		args.append(item)
-	print("Args[1]: ", args[0])
-	print("Args[2]: ", args[1])
 print_header(course_code, args[0], term, args[1])
 
 #Print records for a few students
 # print_row('V00123456', 'Rebecca Raspberry', 81)
 # print_row('V00123457', 'Alissa Aubergine', 90)
 # print_row('V00123458', 'Neal Naranja', 83)
+
+cursor.execute("select student_id, name, grade from enrollment natural join students where code = %s and term_code = %s;", [course_code, term])
+table = cursor.fetchall()
+for row in table:
+	print_row(*row)
 
 #Print the last line (enrollment/max_capacity)
 print_footer(3,150)
