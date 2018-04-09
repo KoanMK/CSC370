@@ -28,9 +28,10 @@ conn = psycopg2.connect(dbname=psql_db,user=psql_user,password=psql_password,hos
 cursor = conn.cursor()
 
 cursor.execute("select term_code, code, name, instructor_name, capacity from course_offerings order by term_code;")
-# table = cursor.fetchall()
-# for row in table:
-# 	print_row(*row)
+cursor.execute("select count(*) as num, code, term_code from enrollment group by code, term_code order by term_code;")
+table = cursor.fetchall()
+for row in table:
+	print(row)
 
 cursor.close()
 conn.close()
