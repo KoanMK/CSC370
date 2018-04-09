@@ -9,6 +9,12 @@
 
 import psycopg2, sys
 
+psql_user = 'nigeld' #Change this to your username
+psql_db = 'nigeld' #Change this to your personal DB name
+psql_password = 'admin' #Put your password (as a string) here
+psql_server = 'studdb2.csc.uvic.ca'
+psql_port = 5432
+
 def print_header(course_code, course_name, term, instructor_name):
 	print("Class list for %s (%s)"%(str(course_code), str(course_name)) )
 	print("  Term %s"%(str(term), ) )
@@ -23,15 +29,14 @@ def print_row(student_id, student_name, grade):
 def print_footer(total_enrolled, max_capacity):
 	print("%s/%s students enrolled"%(str(total_enrolled),str(max_capacity)) )
 
-
-''' The lines below would be helpful in your solution
 if len(sys.argv) < 3:
 	print('Usage: %s <course code> <term>'%sys.argv[0], file=sys.stderr)
 	sys.exit(0)
 	
 course_code, term = sys.argv[1:3]
-'''
 
+conn = psycopg2.connect(dbname=psql_db,user=psql_user,password=psql_password,host=psql_server,port=psql_port)
+cursor = conn.cursor()
 
 # Mockup: Print a class list for CSC 370
 course_code = 'CSC 370'
@@ -47,3 +52,6 @@ print_row('V00123458', 'Neal Naranja', 83)
 
 #Print the last line (enrollment/max_capacity)
 print_footer(3,150)
+
+cursor.close()
+conn.close()
