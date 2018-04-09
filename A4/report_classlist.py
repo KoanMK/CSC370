@@ -51,10 +51,10 @@ args = []
 for row in table:
 	print(row)
 	for item in row:
-		print(item)
+		print("Item: ", item)
 		args.append(item)
-		print(args[0])
-		print(args[1])
+		print("Args[1]: ", args[0])
+		print("Args[2]: ", args[1])
 print_header(course_code, args[0], term, args[1])
 
 #Print records for a few students
