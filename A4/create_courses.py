@@ -59,5 +59,4 @@ with open(input_filename) as f:
 			conn.rollback()
 	
 cursor.close()
-conn.close()
-		
+conn.close()	
