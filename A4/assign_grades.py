@@ -38,7 +38,7 @@ with open(input_filename) as f:
 		
 		try:
 
-			cursor.execute("update enrollment set grade = %s where student_id = %s and code = %s and term_code = %s;", [grade, student_id, course_code, term] )
+			cursor.execute("update enrollment set grade = (%s) where student_id = (%s) and code = (%s) and term_code = (%s);", [grade, student_id, course_code, term] )
 			conn.commit() #Only commit if no error occurs (commit will actually be prevented if an error occurs anyway)
 		except psycopg2.ProgrammingError as err: 
 			#ProgrammingError is thrown when the database error is related to the format of the query (e.g. syntax error)
