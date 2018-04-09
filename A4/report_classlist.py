@@ -45,7 +45,7 @@ cursor = conn.cursor()
 # instructor_name = 'Bill Bird'
 # print_header(course_code, course_name, course_term, instructor_name)
 
-cursor.execute("select name, instructor_name from course_offerings where code = (%s) and term_code = (%s);", [course_code, term])
+cursor.execute("select name, instructor_name from course_offerings where code = '%s' and term_code = '%s';", [course_code, term])
 table = cursor.fetchall()
 args = []
 for row in table:
