@@ -9,6 +9,11 @@
 
 import psycopg2, sys
 
+psql_user = 'nigeld' #Change this to your username
+psql_db = 'nigeld' #Change this to your personal DB name
+psql_password = 'admin' #Put your password (as a string) here
+psql_server = 'studdb2.csc.uvic.ca'
+psql_port = 5432
 
 def print_header(student_id, student_name):
 	print("Transcript for %s (%s)"%(str(student_id), str(student_name)) )
