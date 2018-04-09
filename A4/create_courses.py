@@ -62,7 +62,8 @@ with open(input_filename) as f:
 			conn.rollback()
 
 		try:
-			cursor.execute("insert into course_offerings values( %s, %s );", [code, name] )
+			# cursor.execute("insert into course_offerings (code, term_code, capacity, instructor_name, name) values( %s, %d );", [code, term] )
+			cursor.execute("insert into course_offerings (code, term_code) values( %s, %d );", [code, term] )
 			conn.commit() #Only commit if no error occurs (commit will actually be prevented if an error occurs anyway)
 		except psycopg2.ProgrammingError as err: 
 			#ProgrammingError is thrown when the database error is related to the format of the query (e.g. syntax error)
