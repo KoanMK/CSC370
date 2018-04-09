@@ -39,16 +39,24 @@ conn = psycopg2.connect(dbname=psql_db,user=psql_user,password=psql_password,hos
 cursor = conn.cursor()
 
 # Mockup: Print a class list for CSC 370
-course_code = 'CSC 370'
-course_name = 'Database Systems'
-course_term = 201801
-instructor_name = 'Bill Bird'
-print_header(course_code, course_name, course_term, instructor_name)
+# course_code = 'CSC 370'
+# course_name = 'Database Systems'
+# course_term = 201801
+# instructor_name = 'Bill Bird'
+# print_header(course_code, course_name, course_term, instructor_name)
+
+cursor.execute("select name, instructor_name from course_offerings where code = %s and term_code = %s;", [course_code, term])
+table = cursor.fetchall()
+args = []
+for row in table:
+	for item in row:
+		args.append(item)
+print_header(course_code, args[0], term, args[1])
 
 #Print records for a few students
-print_row('V00123456', 'Rebecca Raspberry', 81)
-print_row('V00123457', 'Alissa Aubergine', 90)
-print_row('V00123458', 'Neal Naranja', 83)
+# print_row('V00123456', 'Rebecca Raspberry', 81)
+# print_row('V00123457', 'Alissa Aubergine', 90)
+# print_row('V00123458', 'Neal Naranja', 83)
 
 #Print the last line (enrollment/max_capacity)
 print_footer(3,150)
