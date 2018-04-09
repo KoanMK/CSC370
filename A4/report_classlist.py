@@ -67,12 +67,12 @@ for row in table:
 cursor.execute("select count(*) from enrollment where code = %s and term_code = %s;", [course_code, term])
 table = cursor.fetchall()
 for row in table:
-	count = row
+	count = *row
 
 cursor.execute("select capacity from course_offerings where code = %s and term_code = %s;", [course_code, term])
 table = cursor.fetchall()
 for row in table:
-	capacity = row
+	capacity = *row
 
 print_footer(count, capacity)
 
