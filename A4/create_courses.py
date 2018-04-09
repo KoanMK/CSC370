@@ -62,6 +62,27 @@ with open(input_filename) as f:
 			conn.rollback()
 
 		try:
+			cursor.execute("insert into instructors values( %s );", [instructor] )
+			conn.commit() #Only commit if no error occurs (commit will actually be prevented if an error occurs anyway)
+		except psycopg2.ProgrammingError as err: 
+			#ProgrammingError is thrown when the database error is related to the format of the query (e.g. syntax error)
+			print("Caught a ProgrammingError:",file=sys.stderr)
+			print(err,file=sys.stderr)
+			conn.rollback()
+		except psycopg2.IntegrityError as err: 
+			#IntegrityError occurs when a constraint (primary key, foreign key, check constraint or trigger constraint) is violated.
+			print("Caught an IntegrityError:",file=sys.stderr)
+			print(err,file=sys.stderr)
+			conn.rollback()
+		except psycopg2.InternalError as err:  
+			#InternalError generally represents a legitimate connection error, but may occur in conjunction with user defined functions.
+			#In particular, InternalError occurs if you attempt to continue using a cursor object after the transaction has been aborted.
+			#(To reset the connection, run conn.rollback() and conn.reset(), then make a new cursor)
+			print("Caught an IntegrityError:",file=sys.stderr)
+			print(err,file=sys.stderr)
+			conn.rollback()
+
+		try:
 			cursor.execute("insert into term values( %s );", [term] )
 			conn.commit() #Only commit if no error occurs (commit will actually be prevented if an error occurs anyway)
 		except psycopg2.ProgrammingError as err: 
