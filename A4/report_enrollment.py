@@ -16,11 +16,11 @@ psql_server = 'studdb2.csc.uvic.ca'
 psql_port = 5432
 
 def print_row(term, course_code, course_name, instructor_name, total_enrollment, maximum_capacity):
-	print("%6s %10s %-35s %-25s %s/%s"%(str(term), str(course_code), str(course_name), str(instructor_name), str(total_enrollment), str(maximum_capacity)) )
+	print("%6s %10s %-35s %-25s %s/%s"%(str(term), str(course_code), str(course_name), str(instructor_name), str(maximum_capacity), str(total_enrollment) ) )
 
 # Mockup: Print some data for a few made up classes
 
-# print_row(201709, 'CSC 106', 'The Practice of Computer Science', 'Bill Bird', 203, 215)
+print_row(201709, 'CSC 106', 'The Practice of Computer Science', 'Bill Bird', 203, 215)
 # print_row(201709, 'CSC 110', 'Fundamentals of Programming: I', 'Jens Weber', 166, 200)
 # print_row(201801, 'CSC 370', 'Database Systems', 'Bill Bird', 146, 150)
 
@@ -28,9 +28,9 @@ conn = psycopg2.connect(dbname=psql_db,user=psql_user,password=psql_password,hos
 cursor = conn.cursor()
 
 cursor.execute("select term_code, code, name, instructor_name, capacity from course_offerings order by term_code;")
-table = cursor.fetchall()
-for row in table:
-	print_row(*row)
+# table = cursor.fetchall()
+# for row in table:
+# 	print_row(*row)
 
 cursor.close()
 conn.close()
