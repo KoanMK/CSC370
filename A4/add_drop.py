@@ -59,7 +59,7 @@ with open(input_filename) as f:
 			conn.rollback()
 
 		try:
-			if add_or_drop = "ADD":
+			if add_or_drop is "ADD":
 				cursor.execute("insert into enrollment (student_id, code, term_code) values( %s, %s, %s );", [student_id, course_code, term] )
 			else:
 				cursor.execute("delete from enrollment where student_id = %s and code = %s and term_code = %s;", [student_id, course_code, term] )
