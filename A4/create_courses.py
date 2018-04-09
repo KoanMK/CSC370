@@ -7,10 +7,10 @@ import sys, csv, psycopg2
 
 psql_user = 'nigeld' #Change this to your username
 psql_db = 'nigeld' #Change this to your personal DB name
-psql_password = 'password' #Put your password (as a string) here
+psql_password = 'admin' #Put your password (as a string) here
 psql_server = 'studdb2.csc.uvic.ca'
-psql_port = 55555
-
+psql_port = 5432
+ 
 conn = psycopg2.connect(dbname=psql_db,user=psql_user,password=psql_password,host=psql_server,port=psql_port)
 
 if len(sys.argv) < 2:
