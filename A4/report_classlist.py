@@ -66,12 +66,13 @@ for row in table:
 #Print the last line (enrollment/max_capacity)
 cursor.execute("select count(*) from enrollment where code = %s and term_code = %s;", [course_code, term])
 table = cursor.fetchall()
-count = table[0]
+for row in table:
+	count = row
 
 cursor.execute("select capacity from course_offerings where code = %s and term_code = %s;", [course_code, term])
 table = cursor.fetchall()
-capacity = table[0]
-
+for row in table:
+	capacity = row
 
 print_footer(count, capacity)
 
