@@ -21,7 +21,8 @@ cursor = conn.cursor()
 cursor.execute("select term_code, code, name, instructor_name, capacity from course_offerings order by term_code;")
 table = cursor.fetchall()
 for row in table:
-	print(row)
+	for item in row:
+		print_row(item)
 
 def print_row(term, course_code, course_name, instructor_name, total_enrollment, maximum_capacity):
 	print("%6s %10s %-35s %-25s %s/%s"%(str(term), str(course_code), str(course_name), str(instructor_name), str(total_enrollment), str(maximum_capacity)) )
