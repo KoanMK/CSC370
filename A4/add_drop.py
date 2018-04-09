@@ -61,7 +61,7 @@ with open(input_filename) as f:
 		try:
 			if add_or_drop == 'ADD':
 				cursor.execute("insert into enrollment (student_id, code, term_code) values( %s, %s, %s );", [student_id, course_code, term] )
-			elif == 'DROP':
+			elif add_or_drop == 'DROP':
 				cursor.execute("delete from enrollment where student_id = %s and code = %s and term_code = %s;", [student_id, course_code, term] )
 			conn.commit() #Only commit if no error occurs (commit will actually be prevented if an error occurs anyway)
 		except psycopg2.ProgrammingError as err: 
