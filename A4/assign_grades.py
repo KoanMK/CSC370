@@ -37,7 +37,6 @@ with open(input_filename) as f:
 		#Make sure to catch any exceptions that occur and roll back the transaction if a database error occurs.
 		
 		try:
-
 			cursor.execute("update enrollment set grade = (%s) where (%s) = student_id and (%s) = code and (%s) = term_code;", [grade, student_id, course_code, term] )
 			conn.commit() #Only commit if no error occurs (commit will actually be prevented if an error occurs anyway)
 		except psycopg2.ProgrammingError as err: 
