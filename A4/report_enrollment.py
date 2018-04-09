@@ -30,8 +30,7 @@ cursor = conn.cursor()
 cursor.execute("select term_code, code, name, instructor_name, capacity from course_offerings order by term_code;")
 table = cursor.fetchall()
 for row in table:
-	for item in row:
-		print_row(item)
+	print_row(*row)
 
 cursor.close()
 conn.close()
