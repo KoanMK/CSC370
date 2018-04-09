@@ -34,6 +34,8 @@ if len(sys.argv) < 3:
 	sys.exit(0)
 	
 course_code, term = sys.argv[1:3]
+print(course_code)
+print(term)
 
 conn = psycopg2.connect(dbname=psql_db,user=psql_user,password=psql_password,host=psql_server,port=psql_port)
 cursor = conn.cursor()
@@ -45,7 +47,7 @@ cursor = conn.cursor()
 # instructor_name = 'Bill Bird'
 # print_header(course_code, course_name, course_term, instructor_name)
 
-cursor.execute("select name, instructor_name from course_offerings where code = '%s' and term_code = '%s';", [course_code, term])
+cursor.execute("select name, instructor_name from course_offerings where code = %s and term_code = %s;", [course_code, term])
 table = cursor.fetchall()
 args = []
 for row in table:
